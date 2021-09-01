@@ -1,6 +1,6 @@
 module github.com/otus-hw/hw01_hello_otus
 
-go 1.17
+go 1.16
 
 require (
 	github.com/go-playground/assert v1.2.1
