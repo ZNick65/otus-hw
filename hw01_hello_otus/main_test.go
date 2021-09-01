@@ -25,7 +25,7 @@ var tests = []struct {
 		false,
 	},
 	{
-		"empty",
+		"empty greeting",
 		"",
 		"",
 		true,
