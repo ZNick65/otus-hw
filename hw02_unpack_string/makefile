@@ -15,8 +15,3 @@ lint:
 test:
 	go test ./...
 .PHONY: test
-
-# run - run the app
-# run:
-# 	go run unpack.go
-# .PHONY: run
