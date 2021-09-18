@@ -1,4 +1,4 @@
-module github.com/ZNick65/hw02_unpack_string
+module github.com/ZNick65/otus-hw/hw02_unpack_string
 
 go 1.16
 
