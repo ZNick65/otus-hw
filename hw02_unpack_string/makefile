@@ -1,7 +1,22 @@
+h help:
+	@echo "lint			- run lint"
+	@echo "test			- run all tests"
+# @echo "run			- run the app"
+
+#lint - run lint
 lint:
-	golangci-lint run .
+	golangci-lint run --fix
+	gofmt -w -s ./..
 	go test -v -count=1 -race -timeout=1m .
 	# ./test.sh # При наличии
+.PHONY: dev
 
-run:
-	go run main.go
+# test - run all tests
+test:
+	go test ./...
+.PHONY: test
+
+# run - run the app
+# run:
+# 	go run unpack.go
+# .PHONY: run
