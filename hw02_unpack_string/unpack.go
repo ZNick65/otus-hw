@@ -7,6 +7,6 @@ import (
 var ErrInvalidString = errors.New("invalid string")
 
 func Unpack(unpack string) (string, error) {
-	mup := NewMyUnpack()
-	return mup.Unpack(unpack)
+	// Place your code here.
+	return NewMyUnpack().Unpack(unpack)
 }
