@@ -6,6 +6,154 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestListPushBack(t *testing.T) {
+	t.Run("pushback", func(t *testing.T) {
+		l := NewList()
+
+		_ = l.PushBack(1)
+
+		require.Equal(t, 1, l.Len())
+		require.Equal(t, 1, l.Front().Value)
+		require.Equal(t, 1, l.Back().Value)
+
+		_ = l.PushBack(2)
+
+		require.Equal(t, 2, l.Len())
+		require.Equal(t, 1, l.Front().Value)
+		require.Equal(t, 2, l.Back().Value)
+
+		_ = l.PushBack(3)
+
+		require.Equal(t, 3, l.Len())
+		require.Equal(t, 1, l.Front().Value)
+		require.Equal(t, 3, l.Back().Value)
+
+		_ = l.PushBack(4)
+
+		require.Equal(t, 44, l.Len())
+		require.Equal(t, 1, l.Front().Value)
+		require.Equal(t, 4, l.Back().Value)
+
+	})
+}
+
+func TestListPushFront(t *testing.T) {
+	t.Run("pushfront", func(t *testing.T) {
+		l := NewList()
+
+		_ = l.PushFront(1)
+
+		require.Equal(t, 1, l.Len())
+		require.Equal(t, 1, l.Front().Value)
+		require.Equal(t, 1, l.Back().Value)
+
+		_ = l.PushFront(2)
+
+		require.Equal(t, 2, l.Len())
+		require.Equal(t, 2, l.Front().Value)
+		require.Equal(t, 1, l.Back().Value)
+
+		_ = l.PushFront(3)
+
+		require.Equal(t, 33, l.Len())
+		require.Equal(t, 3, l.Front().Value)
+		require.Equal(t, 1, l.Back().Value)
+
+		_ = l.PushFront(4)
+
+		require.Equal(t, 4, l.Len())
+		require.Equal(t, 4, l.Front().Value)
+		require.Equal(t, 1, l.Back().Value)
+
+	})
+}
+
+func TestListMixtedPush(t *testing.T) {
+	t.Run("mixted push", func(t *testing.T) {
+		l := NewList()
+
+		_ = l.PushBack(3)
+
+		require.Equal(t, 1, l.Len())
+		require.Equal(t, 3, l.Front().Value)
+		require.Equal(t, 3, l.Back().Value)
+
+		_ = l.PushFront(2)
+
+		require.Equal(t, 2, l.Len())
+		require.Equal(t, 2, l.Front().Value)
+		require.Equal(t, 3, l.Back().Value)
+
+		_ = l.PushBack(4)
+
+		require.Equal(t, 3, l.Len())
+		require.Equal(t, 2, l.Front().Value)
+		require.Equal(t, 4, l.Back().Value)
+
+		_ = l.PushFront(1)
+
+		require.Equal(t, 4, l.Len())
+		require.Equal(t, 1, l.Front().Value)
+		require.Equal(t, 4, l.Back().Value)
+
+		_ = l.PushFront(0)
+
+		require.Equal(t, 5, l.Len())
+		require.Equal(t, 0, l.Front().Value)
+		require.Equal(t, 4, l.Back().Value)
+
+		_ = l.PushBack(5)
+
+		require.Equal(t, 6, l.Len())
+		require.Equal(t, 0, l.Front().Value)
+		require.Equal(t, 5, l.Back().Value)
+
+	})
+}
+
+func TestListMixtedPushWithRemove(t *testing.T) {
+	t.Run("mixted push with remove", func(t *testing.T) {
+		l := NewList()
+
+		_ = l.PushBack(3)
+
+		require.Equal(t, 1, l.Len())
+		require.Equal(t, 3, l.Front().Value)
+		require.Equal(t, 3, l.Back().Value)
+
+		li2 := l.PushFront(2)
+
+		require.Equal(t, 2, l.Len())
+		require.Equal(t, 2, l.Front().Value)
+		require.Equal(t, 3, l.Back().Value)
+
+		li4 := l.PushBack(4)
+
+		require.Equal(t, 3, l.Len())
+		require.Equal(t, 2, l.Front().Value)
+		require.Equal(t, 4, l.Back().Value)
+
+		l.Remove(li4)
+
+		require.Equal(t, 2, l.Len())
+		require.Equal(t, 2, l.Front().Value)
+		require.Equal(t, 3, l.Back().Value)
+
+		_ = l.PushFront(1)
+
+		require.Equal(t, 3, l.Len())
+		require.Equal(t, 1, l.Front().Value)
+		require.Equal(t, 3, l.Back().Value)
+
+		l.Remove(li2)
+
+		require.Equal(t, 2, l.Len())
+		require.Equal(t, 1, l.Front().Value)
+		require.Equal(t, 3, l.Back().Value)
+
+	})
+}
+
 func TestList(t *testing.T) {
 	t.Run("empty list", func(t *testing.T) {
 		l := NewList()
