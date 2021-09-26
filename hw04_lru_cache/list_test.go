@@ -30,10 +30,9 @@ func TestListPushBack(t *testing.T) {
 
 		_ = l.PushBack(4)
 
-		require.Equal(t, 44, l.Len())
+		require.Equal(t, 4, l.Len())
 		require.Equal(t, 1, l.Front().Value)
 		require.Equal(t, 4, l.Back().Value)
-
 	})
 }
 
@@ -55,7 +54,7 @@ func TestListPushFront(t *testing.T) {
 
 		_ = l.PushFront(3)
 
-		require.Equal(t, 33, l.Len())
+		require.Equal(t, 3, l.Len())
 		require.Equal(t, 3, l.Front().Value)
 		require.Equal(t, 1, l.Back().Value)
 
@@ -64,7 +63,6 @@ func TestListPushFront(t *testing.T) {
 		require.Equal(t, 4, l.Len())
 		require.Equal(t, 4, l.Front().Value)
 		require.Equal(t, 1, l.Back().Value)
-
 	})
 }
 
@@ -107,7 +105,6 @@ func TestListMixtedPush(t *testing.T) {
 		require.Equal(t, 6, l.Len())
 		require.Equal(t, 0, l.Front().Value)
 		require.Equal(t, 5, l.Back().Value)
-
 	})
 }
 
@@ -150,7 +147,6 @@ func TestListMixtedPushWithRemove(t *testing.T) {
 		require.Equal(t, 2, l.Len())
 		require.Equal(t, 1, l.Front().Value)
 		require.Equal(t, 3, l.Back().Value)
-
 	})
 }
 

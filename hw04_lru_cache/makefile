@@ -13,5 +13,5 @@ lint:
 
 # test - run all tests
 test:
-	go test ./...
+	go test --race ./...
 .PHONY: test
