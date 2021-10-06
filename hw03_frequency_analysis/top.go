@@ -1,6 +1,8 @@
 package hw03frequencyanalysis
 
-func Top10(_ string) []string {
+const asterisk bool = true
+
+func Top10(s string) []string {
 	// Place your code here.
-	return nil
+	return NewMyTopTen(s, asterisk, TopTen).Top10()
 }
