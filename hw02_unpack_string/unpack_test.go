@@ -16,11 +16,21 @@ func TestUnpack(t *testing.T) {
 		{input: "abccd", expected: "abccd"},
 		{input: "", expected: ""},
 		{input: "aaa0b", expected: "aab"},
+		{input: "d\n5abc", expected: "d\n\n\n\n\nabc"},
 		// uncomment if task with asterisk completed
-		// {input: `qwe\4\5`, expected: `qwe45`},
-		// {input: `qwe\45`, expected: `qwe44444`},
-		// {input: `qwe\\5`, expected: `qwe\\\\\`},
-		// {input: `qwe\\\3`, expected: `qwe\3`},
+		{input: `qwe\4\5`, expected: `qwe45`},
+		{input: `qwe\45`, expected: `qwe44444`},
+		{input: `qwe\\5`, expected: `qwe\\\\\`},
+		{input: `qwe\\\3`, expected: `qwe\3`},
+		{input: `\\\\\\0`, expected: `\\`},
+		{input: `\\\\\\\0`, expected: `\\\0`},
+		{input: `\\0`, expected: ``},
+		{input: `\\0\\0\\0`, expected: ``},
+		{input: `\\1\\1\\1`, expected: `\\\`},
+		{input: `a1b0c1d0`, expected: `ac`},
+		{input: `aa0bb0cc0`, expected: `abc`},
+		{input: `\0\1\2\3\4\5\6\7\8\9`, expected: `0123456789`},
+		{input: `\\0\\1\\0\\1\\0\\1\\0\\1\\0\\1`, expected: `\\\\\`},
 	}
 
 	for _, tc := range tests {
@@ -34,7 +44,7 @@ func TestUnpack(t *testing.T) {
 }
 
 func TestUnpackInvalidString(t *testing.T) {
-	invalidStrings := []string{"3abc", "45", "aaa10b"}
+	invalidStrings := []string{"3abc", "45", "aaa10b", `qw\ne`}
 	for _, tc := range invalidStrings {
 		tc := tc
 		t.Run(tc, func(t *testing.T) {
