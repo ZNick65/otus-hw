@@ -37,43 +37,44 @@ func TestCacheSmallSize(t *testing.T) {
 }
 
 func TestCachePushout(t *testing.T) {
-	t.Run("push out", func(t *testing.T) {
+	// the previous one was "push out"
+	t.Run("purge logic", func(t *testing.T) {
 		c := NewCache(3)
 
-		ok := c.Set("aaa", 10)
+		ok := c.Set("aaa", 10) // |{aaa,10}|  |  |
 		require.False(t, ok)
 
-		ok = c.Set("bbb", 20)
+		ok = c.Set("bbb", 20) // |{bbb,20}|{aaa,10}|  |
 		require.False(t, ok)
 
-		ok = c.Set("ccc", 30)
+		ok = c.Set("ccc", 30) // |{ccc,30}|{bbb,20}|{aaa,10}|
 		require.False(t, ok)
 
-		ok = c.Set("aaa", 30)
+		ok = c.Set("aaa", 30) // |{aaa,30}|{ccc,30}|{bbb,20}|
 		require.True(t, ok)
 
-		ok = c.Set("bbb", 20)
+		ok = c.Set("bbb", 20) // |{bbb,20}|{aaa,30}|{ccc,30}|
 		require.True(t, ok)
 
-		ok = c.Set("ccc", 10)
+		ok = c.Set("ccc", 10) // |{ccc,10}|{bbb,20}|{aaa,30}|
 		require.True(t, ok)
 
-		ok = c.Set("ddd", 40)
+		ok = c.Set("ddd", 40) // |{ddd,40}|{ccc,10}|{bbb,20}|	-> {aaa,20}
 		require.False(t, ok)
 
-		_, ok = c.Get("aaa")
+		_, ok = c.Get("aaa") // |{ddd,40}|{ccc,10}|{bbb,20}|	 x {aaa,20}
 		require.False(t, ok)
 
-		ok = c.Set("eee", 50)
+		ok = c.Set("eee", 50) // |{eee,50}|{ddd,40}|{ccc,10}|	-> {bbb,20}
 		require.False(t, ok)
 
-		_, ok = c.Get("bbb")
+		_, ok = c.Get("bbb") // |{eee,50}|{ddd,40}|{ccc,10}|	 x {bbb,20}
 		require.False(t, ok)
 
-		ok = c.Set("fff", 50)
+		ok = c.Set("fff", 50) // |{fff,50}|{eee,50}|{ddd,40}|	-> {ccc,10}
 		require.False(t, ok)
 
-		_, ok = c.Get("ccc")
+		_, ok = c.Get("ccc") // |{fff,50}|{eee,50}|{ddd,40}|	 x {ccc,10}
 		require.False(t, ok)
 	})
 
@@ -161,7 +162,7 @@ func TestCache(t *testing.T) {
 		require.Nil(t, val)
 	})
 
-	t.Run("purge logic", func(t *testing.T) {
+	t.Run("clear", func(t *testing.T) {
 		c := NewCache(10)
 
 		for i := 0; i < 20; i++ {

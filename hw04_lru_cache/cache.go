@@ -41,7 +41,6 @@ func (lr *lruCache) Set(key Key, value interface{}) bool {
 	if addr, ok := lr.items[key]; ok {
 		addr.Value = ci
 		lr.queue.MoveToFront(addr)
-		lr.items[key] = lr.queue.Front()
 		return true
 	}
 
@@ -63,7 +62,6 @@ func (lr *lruCache) Get(key Key) (interface{}, bool) {
 	defer lr.mu.RUnlock()
 	if addr, ok := lr.items[key]; ok {
 		lr.queue.MoveToFront(addr)
-		lr.items[key] = lr.queue.Front()
 		return addr.Value.(cacheItem).value, true
 	}
 	return nil, false
@@ -75,5 +73,9 @@ func (lr *lruCache) Clear() {
 	defer lr.mu.Unlock()
 	for i := range lr.items {
 		delete(lr.items, i)
+	}
+
+	for i := lr.queue.Back(); i != nil; i = i.Prev {
+		lr.queue.Remove(i)
 	}
 }
