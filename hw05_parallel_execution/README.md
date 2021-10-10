@@ -1,3 +1,5 @@
+![Github CI/CD](https://img.shields.io/github/workflow/status/ZNick65/otus-hw/hw05_parallel_execution)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/ZNick65/otus-hw/hw05_parallel_execution)
 ## Домашнее задание №5 «Параллельное исполнение»
 Необходимо написать функцию для параллельного выполнения заданий в n параллельных горутинах:
 * количество создаваемых горутин не должно зависеть от числа заданий, т.е. функция должна запусать n горутин для параллельно обработки заданий и, возможно, еще несколько вспомогательных горутин;
