@@ -7,7 +7,7 @@ h help:
 lint:
 	golangci-lint run --fix
 	gofmt -w -s ./..
-	go test -v -race -count=100 -timeout=1m .
+	go test -v -race -count=100 -timeout=4m .
 	#./test.sh # При наличии
 .PHONY: dev
 
