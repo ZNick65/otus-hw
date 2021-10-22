@@ -2,6 +2,9 @@ package hw05parallelexecution
 
 import (
 	"errors"
+	"runtime"
+	"strconv"
+	"strings"
 	"sync"
 	"sync/atomic"
 )
@@ -75,4 +78,15 @@ func Run(tasks []Task, n, m int) error {
 	}
 
 	return nil
+}
+
+func getGorutineNo() (int32, error) {
+	var buf [64]byte
+	n := runtime.Stack(buf[:], false)
+	idField := strings.Fields(strings.TrimPrefix(string(buf[:n]), "goroutine "))[0]
+	id, err := strconv.Atoi(idField)
+	if err != nil {
+		return 0, err
+	}
+	return int32(id), err
 }

@@ -1,7 +1,6 @@
 package hw05parallelexecution
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"math/rand"
@@ -135,30 +134,18 @@ func TestRun(t *testing.T) {
 		tasks := make([]Task, 0, tasksCount)
 
 		var runTasksCount int32
-		var stopTasksCount int32
+		selfNo, _ := getGorutineNo()
 
 		for i := 0; i < tasksCount; i++ {
+
 			tasks = append(tasks, func() error {
-				curTaskStart := atomic.LoadInt32(&runTasksCount)
-				curTaskStop := atomic.LoadInt32(&stopTasksCount)
-
-				ctx := context.Background()
-				c, cancel := context.WithTimeout(ctx, TaskDuration)
-				defer cancel()
-
 				atomic.AddInt32(&runTasksCount, 1)
 
 				require.Eventually(t, func() bool {
-					if curTaskStart != atomic.LoadInt32(&runTasksCount) ||
-						curTaskStop != atomic.LoadInt32(&stopTasksCount) {
-						cancel()
-						return true
-					}
-					return false
+					extNo, _ := getGorutineNo()
+					sNo := atomic.LoadInt32(&selfNo)
+					return sNo != extNo
 				}, TaskDuration, TaskTickTime, "eventually")
-
-				<-c.Done()
-				atomic.AddInt32(&stopTasksCount, 1)
 				return nil
 			})
 		}
