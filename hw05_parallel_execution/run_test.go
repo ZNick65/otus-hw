@@ -137,7 +137,6 @@ func TestRun(t *testing.T) {
 		selfNo, _ := getGorutineNo()
 
 		for i := 0; i < tasksCount; i++ {
-
 			tasks = append(tasks, func() error {
 				atomic.AddInt32(&runTasksCount, 1)
 

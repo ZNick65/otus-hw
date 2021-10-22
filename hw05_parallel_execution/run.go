@@ -88,5 +88,5 @@ func getGorutineNo() (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-	return int64(id), err
+	return id, err
 }
