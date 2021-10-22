@@ -143,7 +143,7 @@ func TestRun(t *testing.T) {
 
 				require.Eventually(t, func() bool {
 					extNo, _ := getGorutineNo()
-					sNo := atomic.LoadInt32(&selfNo)
+					sNo := atomic.LoadInt64(&selfNo)
 					return sNo != extNo
 				}, TaskDuration, TaskTickTime, "eventually")
 				return nil

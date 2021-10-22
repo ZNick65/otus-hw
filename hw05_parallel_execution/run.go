@@ -80,13 +80,13 @@ func Run(tasks []Task, n, m int) error {
 	return nil
 }
 
-func getGorutineNo() (int32, error) {
+func getGorutineNo() (int64, error) {
 	var buf [64]byte
 	n := runtime.Stack(buf[:], false)
 	idField := strings.Fields(strings.TrimPrefix(string(buf[:n]), "goroutine "))[0]
-	id, err := strconv.Atoi(idField)
+	id, err := strconv.ParseInt(idField, 10, 64)
 	if err != nil {
 		return 0, err
 	}
-	return int32(id), err
+	return int64(id), err
 }
